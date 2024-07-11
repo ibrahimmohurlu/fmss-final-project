@@ -1,4 +1,4 @@
-package com.ibrahimmohurlu.listing_service.model;
+package com.ibrahimmohurlu.user_service.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -38,7 +38,6 @@ public class Listing {
 
     @PrePersist
     protected void onCreate() {
-        this.status = ListingStatus.IN_REVIEW;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
         this.status = ListingStatus.IN_REVIEW;

@@ -4,27 +4,22 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-@Entity
-@Table(name = "listings")
 @Data
-public class Listing {
+@Entity
+@Table(name = "users")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @Column(nullable = false, unique = true)
+    private String email;
 
     @Column(nullable = false)
-    private String title;
-
-    private String description;
-
-    @Column(nullable = false)
-    private double price;
+    private String password;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -32,16 +27,16 @@ public class Listing {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private ListingStatus status;
+    @OneToMany(mappedBy = "user")
+    private List<UserPackage> userPackages;
+
+//    @OneToMany(mappedBy = "user")
+//    private List<Ad> ads;
 
     @PrePersist
     protected void onCreate() {
-        this.status = ListingStatus.IN_REVIEW;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
-        this.status = ListingStatus.IN_REVIEW;
     }
 
     @PreUpdate

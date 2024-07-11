@@ -1,4 +1,4 @@
-package com.ibrahimmohurlu.package_service.model;
+package com.ibrahimmohurlu.user_service.model;
 
 import jakarta.persistence.*;
 import lombok.Data;

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
@@ -26,11 +27,11 @@ public class User {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-//    @OneToMany(mappedBy = "user")
-//    private List<UserPackage> userPackages;
+    @OneToMany(mappedBy = "user")
+    private List<UserPackage> userPackages;
 
-//    @OneToMany(mappedBy = "user")
-//    private List<Ad> ads;
+    @OneToMany(mappedBy = "user")
+    private List<Listing> listings;
 
     @PrePersist
     protected void onCreate() {

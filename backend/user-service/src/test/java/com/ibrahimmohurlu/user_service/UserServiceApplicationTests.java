@@ -1,10 +1,10 @@
-package com.ibrahimmohurlu.listing_service;
+package com.ibrahimmohurlu.user_service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class PackageServiceApplicationTests {
+class UserServiceApplicationTests {
 
 	@Test
 	void contextLoads() {
