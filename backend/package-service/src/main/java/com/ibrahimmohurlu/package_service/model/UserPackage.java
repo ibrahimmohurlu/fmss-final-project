@@ -35,7 +35,7 @@ public class UserPackage {
     protected void onCreate() {
         this.purchaseDate = LocalDateTime.now();
         this.expirationDate = this.purchaseDate.plusDays(userPackage.getDurationDays());
-        this.adCount = userPackage.getAdLimit();
+        this.adCount = userPackage.getListingAllowance();
     }
 
     // Getters and setters

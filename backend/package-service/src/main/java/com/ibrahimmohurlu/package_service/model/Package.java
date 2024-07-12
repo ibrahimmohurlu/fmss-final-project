@@ -25,8 +25,8 @@ public class Package {
     @Column(name = "duration_days", nullable = false)
     private int durationDays;
 
-    @Column(name = "ad_limit", nullable = false)
-    private int adLimit;
+    @Column(name = "listing_allowance", nullable = false)
+    private int listingAllowance;
 
     @OneToMany(mappedBy = "userPackage")
     private List<UserPackage> userPackages;
