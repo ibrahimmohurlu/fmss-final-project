@@ -28,8 +28,8 @@ public class Package {
     @Column(name = "listing_allowance", nullable = false)
     private int listingAllowance;
 
-    @OneToMany(mappedBy = "userPackage")
-    private List<UserPackage> userPackages;
+//    @OneToMany(mappedBy = "userPackage")
+//    private List<UserPackage> userPackages;
 
     // Getters and setters
 }
