@@ -8,6 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 
+import java.util.Optional;
+
 @SpringBootApplication
 @EnableDiscoveryClient
 public class UserServiceApplication {
@@ -19,10 +21,14 @@ public class UserServiceApplication {
     @Bean
     CommandLineRunner userServiceInitData(UserRepository userRepository) {
         return args -> {
-            User u = new User();
-            u.setEmail("demo@mail.com");
-            u.setPassword("secret123");
-            userRepository.save(u);
+            Optional<User> optionalUser = userRepository.findUserByEmail("demo@mail.com");
+            if (optionalUser.isEmpty()) {
+                User u = new User();
+                u.setEmail("demo@mail.com");
+                u.setPassword("secret123");
+                userRepository.save(u);
+            }
+
         };
     }
 }
