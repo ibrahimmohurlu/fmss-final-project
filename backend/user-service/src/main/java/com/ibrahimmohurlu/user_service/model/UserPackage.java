@@ -28,14 +28,14 @@ public class UserPackage {
     @Column(name = "expiration_date", nullable = false)
     private LocalDateTime expirationDate;
 
-    @Column(name = "allowance_count", nullable = false)
-    private int allowanceCount;
+    @Column(name = "remaining_listing_allowance", nullable = false)
+    private int remainingListingAllowance;
 
     @PrePersist
     protected void onCreate() {
         this.purchaseDate = LocalDateTime.now();
         this.expirationDate = this.purchaseDate.plusDays(userPackage.getDurationDays());
-        this.allowanceCount = userPackage.getListingAllowance();
+        this.remainingListingAllowance = userPackage.getListingLimit();
     }
 
     // Getters and setters
