@@ -25,7 +25,11 @@ public class PackageServiceApplication {
             p.setPrice(123.45);
             p.setListingAllowance(10);
             p.setDurationDays(30);
-            repo.save(p);
+
+            if (repo.findAll().isEmpty()) {
+                repo.save(p);
+            }
+
         };
     }
 }
