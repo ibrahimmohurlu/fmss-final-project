@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+
 @Data
 @Builder
 public class UserPackageResponseDto {
@@ -19,4 +20,6 @@ public class UserPackageResponseDto {
     private LocalDateTime expirationDate;
     @JsonProperty("remaining_listing_allowance")
     private int remainingListingAllowance;
+    @JsonProperty("is_confirmed")
+    private boolean isConfirmed;
 }

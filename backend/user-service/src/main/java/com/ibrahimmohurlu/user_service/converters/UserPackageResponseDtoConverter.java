@@ -18,6 +18,7 @@ public class UserPackageResponseDtoConverter {
                         .packageId(p.getUserPackage().getId())
                         .expirationDate(p.getExpirationDate())
                         .purchaseDate(p.getPurchaseDate())
+                        .isConfirmed(p.isConfirmed())
                         .remainingListingAllowance(p.getRemainingListingAllowance())
                         .build())
                 .collect(Collectors.toList());
