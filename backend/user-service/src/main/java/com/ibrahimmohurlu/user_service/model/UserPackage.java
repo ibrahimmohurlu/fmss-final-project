@@ -28,6 +28,12 @@ public class UserPackage {
     @Column(name = "expiration_date", nullable = false)
     private LocalDateTime expirationDate;
 
+    @Column(name = "confirmation_date")
+    private LocalDateTime confirmationDate;
+
+    @Column(name = "is_confirmed")
+    private boolean isConfirmed;
+
     @Column(name = "remaining_listing_allowance", nullable = false)
     private int remainingListingAllowance;
 
@@ -36,6 +42,8 @@ public class UserPackage {
         this.purchaseDate = LocalDateTime.now();
         this.expirationDate = this.purchaseDate.plusDays(userPackage.getDurationDays());
         this.remainingListingAllowance = userPackage.getListingAllowance();
+        this.isConfirmed = false;
+        this.confirmationDate = null;
     }
 
     // Getters and setters
