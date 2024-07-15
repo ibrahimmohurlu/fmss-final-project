@@ -14,6 +14,6 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findUserByEmail(String email);
 
-    @Query("SELECT up FROM User u JOIN u.userPackages up WHERE u.email = :email AND up.remainingListingAllowance > 0 AND up.expirationDate > CURRENT_DATE")
+    @Query("SELECT up FROM User u JOIN u.userPackages up WHERE u.email = :email AND up.remainingListingAllowance > 0 AND up.expirationDate > CURRENT_DATE AND up.isConfirmed=true")
     List<UserPackage> findUsersWithActiveUserPackages(@Param("email") String email);
 }
