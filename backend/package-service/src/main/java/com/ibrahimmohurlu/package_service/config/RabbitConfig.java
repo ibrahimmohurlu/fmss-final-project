@@ -13,11 +13,10 @@ public class RabbitConfig {
 
     public static final String PACKAGE_PURCHASE_EXCHANGE = "packagePurchaseExchange";
     public static final String PAYMENT_QUEUE = "paymentQueue";
-    public static final String NOTIFICATION_QUEUE = "notificationQueue";
-
+    public static final String PAYMENT_ROUTING_KEY = "paymentRoutingKey";
     @Bean
-    public FanoutExchange fanoutExchange() {
-        return new FanoutExchange(PACKAGE_PURCHASE_EXCHANGE);
+    public DirectExchange directExchange() {
+        return new DirectExchange(PACKAGE_PURCHASE_EXCHANGE);
     }
 
     @Bean
@@ -26,19 +25,10 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Queue notificationQueue() {
-        return new Queue(NOTIFICATION_QUEUE);
+    public Binding paymentBinding(DirectExchange directExchange, Queue paymentQueue) {
+        return BindingBuilder.bind(paymentQueue).to(directExchange).with(PAYMENT_ROUTING_KEY);
     }
 
-    @Bean
-    public Binding paymentBinding(FanoutExchange fanoutExchange, Queue paymentQueue) {
-        return BindingBuilder.bind(paymentQueue).to(fanoutExchange);
-    }
-
-    @Bean
-    public Binding notificationBinding(FanoutExchange fanoutExchange, Queue notificationQueue) {
-        return BindingBuilder.bind(notificationQueue).to(fanoutExchange);
-    }
 
     @Bean
     public Jackson2JsonMessageConverter jackson2JsonMessageConverter() {

@@ -13,7 +13,7 @@ public class RabbitMessageProducer {
     private final RabbitTemplate rabbitTemplate;
 
     public void sendPackagePurchaseMessage(PackagePurchasedMessageDto message) {
-        rabbitTemplate.convertAndSend(RabbitConfig.PACKAGE_PURCHASE_EXCHANGE, "", message);
+        rabbitTemplate.convertAndSend(RabbitConfig.PACKAGE_PURCHASE_EXCHANGE, RabbitConfig.PAYMENT_ROUTING_KEY, message);
     }
 }
 
