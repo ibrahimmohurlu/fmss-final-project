@@ -1,4 +1,4 @@
-package com.ibrahimmohurlu.payment_service.service;
+package com.ibrahimmohurlu.payment_service.consumer;
 
 import com.ibrahimmohurlu.payment_service.config.RabbitConfig;
 import com.ibrahimmohurlu.payment_service.model.Payment;
@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class PaymentService {
+public class PaymentConsumer {
 
     private final PaymentRepository paymentRepository;
     private final RabbitMessageProducer producer;
