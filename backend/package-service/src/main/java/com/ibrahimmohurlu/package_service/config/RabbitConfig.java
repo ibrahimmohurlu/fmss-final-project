@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitConfig {
 
     public static final String PACKAGE_PURCHASE_EXCHANGE = "packagePurchaseExchange";
+    public static final String PAYMENT_CONFIRMATION_QUEUE = "paymentConfirmationQueue";
     public static final String PAYMENT_QUEUE = "paymentQueue";
     public static final String PAYMENT_ROUTING_KEY = "paymentRoutingKey";
     @Bean
