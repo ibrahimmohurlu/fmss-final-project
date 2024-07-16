@@ -3,6 +3,8 @@ package com.ibrahimmohurlu.package_service.controller;
 import com.ibrahimmohurlu.package_service.dto.UserByEmailResponseDto;
 import com.ibrahimmohurlu.package_service.model.Package;
 import com.ibrahimmohurlu.package_service.model.UserPackage;
+import com.ibrahimmohurlu.package_service.producer.RabbitMessageProducer;
+import com.ibrahimmohurlu.package_service.producer.dto.PackagePurchasedMessageDto;
 import com.ibrahimmohurlu.package_service.service.PackageService;
 import com.ibrahimmohurlu.package_service.service.UserServiceWebClient;
 import com.ibrahimmohurlu.package_service.utils.AuthorizationUtils;
@@ -21,6 +23,7 @@ public class PackageController {
 
     private final PackageService packageService;
     private final UserServiceWebClient userService;
+    private final RabbitMessageProducer producer;
 
     @GetMapping
     public ResponseEntity<List<Package>> getAllPackages() {
@@ -38,8 +41,14 @@ public class PackageController {
 
         UserByEmailResponseDto userResponse = userService.getUserByEmail(userEmail, authHeader);
 
-        UserPackage createPackage = packageService.createUserPackage(purchasedPackage, userResponse.getId());
-        // TODO: send async message to payment service
+        UserPackage createdPackage = packageService.createUserPackage(purchasedPackage, userResponse.getId());
+
+        PackagePurchasedMessageDto messageDto = PackagePurchasedMessageDto
+                .builder()
+                .userPackage(createdPackage)
+                .userEmail(userEmail)
+                .build();
+        producer.sendPackagePurchaseMessage(messageDto);
         return ResponseEntity.noContent().build();
     }
 }
