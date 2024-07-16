@@ -14,18 +14,19 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitConfig {
 
-    public static final String PACKAGE_PURCHASE_EXCHANGE = "packagePurchaseExchange";
+    public static final String PACKAGE_PURCHASE_CONFIRMATION_EXCHANGE = "packagePurchaseConfirmationExchange";
+    public static final String PAYMENT_CONFIRMATION_QUEUE = "paymentConfirmationQueue";
     public static final String PAYMENT_QUEUE = "paymentQueue";
     public static final String NOTIFICATION_QUEUE = "notificationQueue";
 
     @Bean
     public FanoutExchange fanoutExchange() {
-        return new FanoutExchange(PACKAGE_PURCHASE_EXCHANGE);
+        return new FanoutExchange(PACKAGE_PURCHASE_CONFIRMATION_EXCHANGE);
     }
 
     @Bean
     public Queue paymentQueue() {
-        return new Queue(PAYMENT_QUEUE);
+        return new Queue(PAYMENT_CONFIRMATION_QUEUE);
     }
 
     @Bean

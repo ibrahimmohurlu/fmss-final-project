@@ -1,8 +1,9 @@
 package com.ibrahimmohurlu.payment_service.service;
 
 import com.ibrahimmohurlu.payment_service.config.RabbitConfig;
-import com.ibrahimmohurlu.payment_service.dto.PackagePurchasedMessageDto;
 import com.ibrahimmohurlu.payment_service.model.Payment;
+import com.ibrahimmohurlu.payment_service.producer.RabbitMessageProducer;
+import com.ibrahimmohurlu.payment_service.producer.dto.PackagePurchasedMessageDto;
 import com.ibrahimmohurlu.payment_service.repository.PaymentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,9 +18,16 @@ import java.time.LocalDateTime;
 public class PaymentService {
 
     private final PaymentRepository paymentRepository;
-
+    private final RabbitMessageProducer producer;
+    /**
+     * We just save the purchase data into Mongo DB
+     * and send purchase confirmation message to package service
+     * using Rabbit MQ. This code simulates a real payment
+     * happened here.
+     * */
     @RabbitListener(queues = RabbitConfig.PAYMENT_QUEUE)
     public void handlePayment(PackagePurchasedMessageDto message) {
+
         Payment payment = Payment
                 .builder()
                 .userEmail(message.getUserEmail())
@@ -27,6 +35,7 @@ public class PaymentService {
                 .purchaseDate(LocalDateTime.now())
                 .build();
         paymentRepository.save(payment);
+        producer.sendPurchaseConfirmationMessage(message);
         log.info("Payment processed for package: {}", message);
     }
 }

@@ -23,10 +23,10 @@ public class PaymentServiceApplication {
     @Bean
     CommandLineRunner runner(PaymentRepository repo) {
         return args -> {
-            repo.save(Payment.builder()
-                    .purchaseDate(LocalDateTime.now())
-                    .userEmail("asd@mail.com")
-                    .build());
+//            repo.save(Payment.builder()
+//                    .purchaseDate(LocalDateTime.now())
+//                    .userEmail("asd@mail.com")
+//                    .build());
             repo.findAll().forEach(System.out::println);
         };
     }

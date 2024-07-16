@@ -1,4 +1,4 @@
-package com.ibrahimmohurlu.payment_service.dto;
+package com.ibrahimmohurlu.payment_service.producer.dto;
 
 import com.ibrahimmohurlu.payment_service.model.UserPackage;
 import lombok.Builder;
