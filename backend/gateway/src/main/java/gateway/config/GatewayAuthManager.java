@@ -42,8 +42,11 @@ public class GatewayAuthManager implements ReactiveAuthenticationManager {
                 })
                 .bodyToMono(UserInfoDto.class)
                 .flatMap(userInfo -> {
+                    System.out.println(userInfo);
                     if (userInfo != null && userInfo.getPassword().equals(password)) {
-                        return Mono.just(new UsernamePasswordAuthenticationToken(name, password, Collections.emptyList()));
+                        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(name, password, Collections.emptyList());
+                        auth.setDetails(userInfo.getId());
+                        return Mono.just(auth);
                     }
                     return Mono.error(new BadCredentialsException("Invalid Credentials"));
                 });

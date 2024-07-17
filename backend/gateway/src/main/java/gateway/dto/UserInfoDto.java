@@ -1,7 +1,7 @@
 package gateway.dto;
 
 public class UserInfoDto {
-
+    private Long id;
     private String email;
     private String password;
 
@@ -13,10 +13,15 @@ public class UserInfoDto {
         return password;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     @Override
     public String toString() {
         return "UserInfoDto{" +
-                "email='" + email + '\'' +
+                "id=" + id +
+                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }
