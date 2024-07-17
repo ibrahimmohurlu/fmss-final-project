@@ -42,7 +42,6 @@ public class GatewayAuthManager implements ReactiveAuthenticationManager {
                 })
                 .bodyToMono(UserInfoDto.class)
                 .flatMap(userInfo -> {
-                    System.out.println(userInfo);
                     if (userInfo != null && userInfo.getPassword().equals(password)) {
                         UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(name, password, Collections.emptyList());
                         auth.setDetails(userInfo.getId());

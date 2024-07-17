@@ -24,7 +24,6 @@ public class UserIdHeaderInterceptor implements WebFilter {
                     if (authentication != null && authentication.isAuthenticated()) {
                         String userId = authentication.getDetails().toString();
                         if (userId != null) {
-
                             ServerHttpRequest request = exchange.getRequest().mutate()
                                     .header("USER_ID", userId)
                                     .build();
