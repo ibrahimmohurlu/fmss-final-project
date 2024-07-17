@@ -9,11 +9,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ListingResponseDtoConverter {
+public class ListingDtoConverter {
+
     public static List<ListingResponseDto> listingToListingResponseDto(List<Listing> listingList) {
         return listingList
                 .stream()
-                .map(ListingResponseDtoConverter::listingToListingResponseDto)
+                .map(ListingDtoConverter::listingToListingResponseDto)
                 .collect(Collectors.toList());
     }
 
