@@ -26,6 +26,7 @@ public class ListingDtoConverter {
                 .title(listing.getTitle())
                 .description(listing.getDescription())
                 .price(listing.getPrice())
+                .status(listing.getStatus())
                 .updatedAt(listing.getUpdatedAt())
                 .createdAt(listing.getCreatedAt())
                 .build();
