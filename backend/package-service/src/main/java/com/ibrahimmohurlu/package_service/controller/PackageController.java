@@ -1,12 +1,10 @@
 package com.ibrahimmohurlu.package_service.controller;
 
-import com.ibrahimmohurlu.package_service.dto.UserByEmailResponseDto;
 import com.ibrahimmohurlu.package_service.model.Package;
 import com.ibrahimmohurlu.package_service.model.UserPackage;
 import com.ibrahimmohurlu.package_service.producer.RabbitMessageProducer;
 import com.ibrahimmohurlu.package_service.producer.dto.PackagePurchasedMessageDto;
 import com.ibrahimmohurlu.package_service.service.PackageService;
-import com.ibrahimmohurlu.package_service.service.UserServiceWebClient;
 import com.ibrahimmohurlu.package_service.utils.AuthorizationUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +20,6 @@ import java.util.Optional;
 public class PackageController {
 
     private final PackageService packageService;
-    private final UserServiceWebClient userService;
     private final RabbitMessageProducer producer;
 
     @GetMapping
@@ -31,17 +28,21 @@ public class PackageController {
     }
 
     @PostMapping("/{packageId}/purchase")
-    public ResponseEntity<UserPackage> purchasePackageById(@PathVariable Long packageId, @RequestHeader("Authorization") String authHeader) {
+    public ResponseEntity<UserPackage> purchasePackageById(
+            @PathVariable Long packageId,
+            @RequestHeader("Authorization") String authHeader,
+            @RequestHeader("USER_ID") Long userId) {
+
         Optional<Package> optionalPackage = packageService.getPackageById(packageId);
         if (optionalPackage.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
+
         Package purchasedPackage = optionalPackage.get();
+
         String userEmail = AuthorizationUtils.getUsernameFromAuthHeader(authHeader);
 
-        UserByEmailResponseDto userResponse = userService.getUserByEmail(userEmail, authHeader);
-
-        UserPackage createdPackage = packageService.createUserPackage(purchasedPackage, userResponse.getId());
+        UserPackage createdPackage = packageService.createUserPackage(purchasedPackage, userId);
 
         PackagePurchasedMessageDto messageDto = PackagePurchasedMessageDto
                 .builder()
