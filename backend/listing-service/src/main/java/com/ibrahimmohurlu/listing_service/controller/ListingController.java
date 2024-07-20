@@ -3,6 +3,7 @@ package com.ibrahimmohurlu.listing_service.controller;
 import com.ibrahimmohurlu.listing_service.converters.ListingDtoConverter;
 import com.ibrahimmohurlu.listing_service.dto.CreateListingRequestDto;
 import com.ibrahimmohurlu.listing_service.dto.ListingResponseDto;
+import com.ibrahimmohurlu.listing_service.dto.UpdateListingRequestDto;
 import com.ibrahimmohurlu.listing_service.dto.UserPackageResponseDto;
 import com.ibrahimmohurlu.listing_service.model.Listing;
 import com.ibrahimmohurlu.listing_service.producer.RabbitMessageProducer;
@@ -53,5 +54,16 @@ public class ListingController {
         producer.sendListingReviewMessage(reviewMessage);
         // TODO:return 201 created with location header
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{listingId}")
+    public ResponseEntity<Void> updateListing(
+            @PathVariable Long listingId,
+            @Valid @RequestBody UpdateListingRequestDto updateListingRequest,
+            @RequestHeader("USER_ID") Long userId
+    ) {
+
+        listingService.getUpdateListing(listingId,userId, updateListingRequest);
+        return ResponseEntity.ok().build();
     }
 }
