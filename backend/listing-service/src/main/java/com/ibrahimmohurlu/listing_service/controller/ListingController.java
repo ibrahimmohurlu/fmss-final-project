@@ -56,6 +56,14 @@ public class ListingController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/{listingId}")
+    public ResponseEntity<ListingResponseDto> getListingById(@PathVariable Long listingId) {
+
+        Listing listingById = listingService.getListingById(listingId);
+        ListingResponseDto listingResponseDto = ListingDtoConverter.listingToListingResponseDto(listingById);
+        return ResponseEntity.ok(listingResponseDto);
+    }
+
     @PutMapping("/{listingId}")
     public ResponseEntity<Void> updateListing(
             @PathVariable Long listingId,
@@ -70,6 +78,12 @@ public class ListingController {
     @DeleteMapping("/{listingId}")
     public ResponseEntity<Void> deleteById(@PathVariable Long listingId, @RequestHeader("USER_ID") Long userId) {
         listingService.deleteById(listingId, userId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{listingId}/status/toggle")
+    public ResponseEntity<Void> updateListingStatus(@PathVariable Long listingId, @RequestHeader("USER_ID") Long userId) {
+        listingService.toggleListingStatus(listingId, userId);
         return ResponseEntity.noContent().build();
     }
 }

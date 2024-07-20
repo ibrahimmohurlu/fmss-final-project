@@ -2,6 +2,7 @@ package com.ibrahimmohurlu.listing_service.service;
 
 import com.ibrahimmohurlu.listing_service.dto.CreateListingRequestDto;
 import com.ibrahimmohurlu.listing_service.dto.UpdateListingRequestDto;
+import com.ibrahimmohurlu.listing_service.exception.BadRequestException;
 import com.ibrahimmohurlu.listing_service.exception.ForbiddenException;
 import com.ibrahimmohurlu.listing_service.exception.NotFoundException;
 import com.ibrahimmohurlu.listing_service.model.Listing;
@@ -21,6 +22,15 @@ public class ListingService {
 
     public List<Listing> getAllListings() {
         return listingRepository.findByStatusEquals(ListingStatus.ACTIVE);
+    }
+
+    public Listing getListingById(Long listingId) {
+
+        Optional<Listing> optionalListing = listingRepository.findById(listingId);
+        if (optionalListing.isEmpty()) {
+            throw new NotFoundException("Listing with id:" + listingId + " not found");
+        }
+        return optionalListing.get();
     }
 
     public Listing createListing(CreateListingRequestDto dto, Long userId) {
@@ -80,5 +90,28 @@ public class ListingService {
         }
 
         listingRepository.deleteById(listing.getId());
+    }
+
+    public void toggleListingStatus(Long listingId, Long userId) {
+        Optional<Listing> optionalListing = listingRepository.findById(listingId);
+
+        if (optionalListing.isEmpty()) {
+            throw new NotFoundException("Listing with id:" + listingId + " not found");
+        }
+
+        Listing listing = optionalListing.get();
+
+        if (!listing.getUser().getId().equals(userId)) {
+            throw new ForbiddenException("Forbidden");
+        }
+
+        if (listing.getStatus().equals(ListingStatus.IN_REVIEW)) {
+            throw new BadRequestException("Listing status IN_REVIEW can not be changed");
+        } else if (listing.getStatus().equals(ListingStatus.ACTIVE)) {
+            listing.setStatus(ListingStatus.INACTIVE);
+        } else {
+            listing.setStatus(ListingStatus.ACTIVE);
+        }
+        listingRepository.save(listing);
     }
 }

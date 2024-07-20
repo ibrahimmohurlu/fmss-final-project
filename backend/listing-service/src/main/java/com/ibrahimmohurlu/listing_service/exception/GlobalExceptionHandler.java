@@ -46,4 +46,13 @@ public class GlobalExceptionHandler {
         log.error(ex.getMessage());
         return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
     }
+
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<?> badRequest(BadRequestException ex, HttpServletRequest request) {
+
+        Map<String, String> result = new HashMap<>();
+        result.put("message", ex.getMessage());
+        log.error(ex.getMessage());
+        return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+    }
 }
