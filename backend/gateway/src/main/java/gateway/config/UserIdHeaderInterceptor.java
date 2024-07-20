@@ -1,5 +1,6 @@
 package gateway.config;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.core.context.ReactiveSecurityContextHolder;
 import org.springframework.security.core.context.SecurityContext;
@@ -9,14 +10,13 @@ import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
-import java.util.Optional;
-
 @Component
 public class UserIdHeaderInterceptor implements WebFilter {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         String path = exchange.getRequest().getURI().getPath();
-        if (path.equals("/api/v1/packages") || path.equals("/api/v1/listings")) {
+        boolean isGet = exchange.getRequest().getMethod().equals(HttpMethod.GET);
+        if ((path.equals("/api/v1/packages") && isGet) || (path.equals("/api/v1/listings") && isGet)) {
             return chain.filter(exchange); // permitAll endpointler için filtreden çık
         }
         return ReactiveSecurityContextHolder
