@@ -16,6 +16,7 @@ public class RabbitConfig {
 
     public static final String LISTING_REVIEW_EXCHANGE = "listingReviewExchange";
     public static final String LISTING_REVIEW_QUEUE = "listingReviewQueue";
+    public static final String LISTING_REVIEW_CONFIRM_QUEUE = "listingReviewConfirmQueue";
     public static final String LISTING_REVIEW_ROUTING_KEY = "listingRoutingKey";
 
     @Bean
