@@ -2,6 +2,7 @@ package com.ibrahimmohurlu.listing_service.service;
 
 import com.ibrahimmohurlu.listing_service.dto.CreateListingRequestDto;
 import com.ibrahimmohurlu.listing_service.model.Listing;
+import com.ibrahimmohurlu.listing_service.model.ListingStatus;
 import com.ibrahimmohurlu.listing_service.model.User;
 import com.ibrahimmohurlu.listing_service.repository.ListingRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,7 @@ public class ListingService {
     private final ListingRepository listingRepository;
 
     public List<Listing> getAllListings() {
-        return listingRepository.findAll();
+        return listingRepository.findByStatusEquals(ListingStatus.ACTIVE);
     }
 
     public Listing createListing(CreateListingRequestDto dto, Long userId) {
