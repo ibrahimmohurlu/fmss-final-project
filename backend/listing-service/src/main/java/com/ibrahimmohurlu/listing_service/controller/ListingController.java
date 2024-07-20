@@ -5,6 +5,8 @@ import com.ibrahimmohurlu.listing_service.dto.CreateListingRequestDto;
 import com.ibrahimmohurlu.listing_service.dto.ListingResponseDto;
 import com.ibrahimmohurlu.listing_service.dto.UserPackageResponseDto;
 import com.ibrahimmohurlu.listing_service.model.Listing;
+import com.ibrahimmohurlu.listing_service.producer.RabbitMessageProducer;
+import com.ibrahimmohurlu.listing_service.producer.dto.ListingReviewMessageDto;
 import com.ibrahimmohurlu.listing_service.service.ListingService;
 import com.ibrahimmohurlu.listing_service.service.UserServiceWebClient;
 import jakarta.validation.Valid;
@@ -22,6 +24,7 @@ public class ListingController {
 
     private final ListingService listingService;
     private final UserServiceWebClient userServiceWebClient;
+    private final RabbitMessageProducer producer;
 
     @GetMapping
     public ResponseEntity<List<ListingResponseDto>> getAllListings() {
@@ -46,7 +49,8 @@ public class ListingController {
         }
 
         Listing createdListing = listingService.createListing(createListingRequestDto, userId);
-        // TODO:send message to listing-review service
+        ListingReviewMessageDto reviewMessage = ListingReviewMessageDto.builder().listing(createdListing).build();
+        producer.sendListingReviewMessage(reviewMessage);
         // TODO:return 201 created with location header
         return ResponseEntity.noContent().build();
     }
