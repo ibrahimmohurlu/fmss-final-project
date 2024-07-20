@@ -43,7 +43,7 @@ public class ListingService {
         Double price = updateListingRequestDto.getPrice();
 
         if (optionalListing.isEmpty()) {
-            throw new NotFoundException("listing with id:" + listingId + " not found");
+            throw new NotFoundException("Listing with id:" + listingId + " not found");
         }
 
         Listing listing = optionalListing.get();
@@ -63,5 +63,22 @@ public class ListingService {
         }
 
         listingRepository.save(listing);
+    }
+
+    public void deleteById(Long listingId, Long userId) {
+
+        Optional<Listing> optionalListing = listingRepository.findById(listingId);
+
+        if (optionalListing.isEmpty()) {
+            throw new NotFoundException("Listing with id:" + listingId + " not found");
+        }
+
+        Listing listing = optionalListing.get();
+
+        if (!listing.getUser().getId().equals(userId)) {
+            throw new ForbiddenException("Forbidden");
+        }
+
+        listingRepository.deleteById(listing.getId());
     }
 }

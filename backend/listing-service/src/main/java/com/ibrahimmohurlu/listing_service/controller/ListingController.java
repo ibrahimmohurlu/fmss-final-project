@@ -63,7 +63,13 @@ public class ListingController {
             @RequestHeader("USER_ID") Long userId
     ) {
 
-        listingService.getUpdateListing(listingId,userId, updateListingRequest);
+        listingService.getUpdateListing(listingId, userId, updateListingRequest);
         return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{listingId}")
+    public ResponseEntity<Void> deleteById(@PathVariable Long listingId, @RequestHeader("USER_ID") Long userId) {
+        listingService.deleteById(listingId, userId);
+        return ResponseEntity.noContent().build();
     }
 }
