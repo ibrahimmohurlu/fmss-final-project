@@ -1,5 +1,6 @@
 package com.ibrahimmohurlu.user_service.repository;
 
+import com.ibrahimmohurlu.user_service.model.Listing;
 import com.ibrahimmohurlu.user_service.model.User;
 import com.ibrahimmohurlu.user_service.model.UserPackage;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,4 +17,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("SELECT up FROM User u JOIN u.userPackages up WHERE u.email = :email AND up.remainingListingAllowance > 0 AND up.expirationDate > CURRENT_DATE AND up.isConfirmed=true")
     List<UserPackage> findUsersWithActiveUserPackages(@Param("email") String email);
+
+    @Query("SELECT l FROM Listing l WHERE l.user.id = :userId")
+    List<Listing> findAllListingsByUserId(@Param("userId") Long userId);
 }

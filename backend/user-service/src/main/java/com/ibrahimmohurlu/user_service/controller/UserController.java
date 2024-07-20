@@ -1,9 +1,12 @@
 package com.ibrahimmohurlu.user_service.controller;
 
+import com.ibrahimmohurlu.user_service.converters.ListingDtoConverter;
 import com.ibrahimmohurlu.user_service.converters.UserPackageResponseDtoConverter;
 import com.ibrahimmohurlu.user_service.converters.UserResponseDtoConverter;
+import com.ibrahimmohurlu.user_service.dto.ListingResponseDto;
 import com.ibrahimmohurlu.user_service.dto.UserPackageResponseDto;
 import com.ibrahimmohurlu.user_service.dto.UserResponseDto;
+import com.ibrahimmohurlu.user_service.model.Listing;
 import com.ibrahimmohurlu.user_service.model.User;
 import com.ibrahimmohurlu.user_service.model.UserPackage;
 import com.ibrahimmohurlu.user_service.service.UserService;
@@ -57,5 +60,12 @@ public class UserController {
         List<UserPackage> activePackages = userService.getActiveUserPackagesByEmail(userEmail);
         List<UserPackageResponseDto> activePackagesDto = UserPackageResponseDtoConverter.UserPackageListToUserPackageDtoList(activePackages);
         return ResponseEntity.ok(activePackagesDto);
+    }
+
+    @GetMapping("/listings")
+    public ResponseEntity<List<ListingResponseDto>> getUserListings(@RequestHeader("USER_ID") Long userId) {
+        List<Listing> userListings = userService.getUserListingsById(userId);
+        List<ListingResponseDto> userListingsResponseDto = ListingDtoConverter.listingToListingResponseDto(userListings);
+        return ResponseEntity.ok(userListingsResponseDto);
     }
 }

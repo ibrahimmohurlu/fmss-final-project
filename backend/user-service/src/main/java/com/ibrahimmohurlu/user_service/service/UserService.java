@@ -1,5 +1,6 @@
 package com.ibrahimmohurlu.user_service.service;
 
+import com.ibrahimmohurlu.user_service.model.Listing;
 import com.ibrahimmohurlu.user_service.model.User;
 import com.ibrahimmohurlu.user_service.model.UserPackage;
 import com.ibrahimmohurlu.user_service.repository.UserRepository;
@@ -20,5 +21,8 @@ public class UserService {
 
     public List<UserPackage> getActiveUserPackagesByEmail(String email) {
         return userRepository.findUsersWithActiveUserPackages(email);
+    }
+    public  List<Listing> getUserListingsById(Long userId){
+        return userRepository.findAllListingsByUserId(userId);
     }
 }
