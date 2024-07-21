@@ -3,6 +3,7 @@ import Link from "next/link";
 
 export default async function Navbar() {
     const session = await auth()
+    console.log(session?.user?.code)
     return (
         <nav className="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
