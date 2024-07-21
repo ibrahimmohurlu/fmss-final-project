@@ -1,34 +1,8 @@
 import { signIn } from "@/auth";
 import { SubmitButton } from "@/components/SubmitButton";
-import { FormEvent, useState } from "react";
-import toast from "react-hot-toast";
 
 
 export default function LoginPage() {
-    // const [email, setEmail] = useState('');
-    // const [password, setPassword] = useState('');
-
-    // const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
-    //     e.preventDefault();
-
-    //     try {
-    //         const response = await fetch('/api/auth', {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify({ email, password })
-    //         });
-    //         const result = await response.json() as LoginResponse;
-    //         if (result.status === "success") {
-    //             toast.success(result.message)
-    //         } else {
-    //             toast.error(result.message);
-    //         }
-    //     } catch (error) {
-    //         toast.error('An error occurred');
-    //     }
-    // };
 
     return (
         <main className="flex min-h-screen flex-col items-center justify-between">
