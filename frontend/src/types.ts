@@ -7,3 +7,12 @@ type ServerLoginResponse = {
     updated_at: string
 }
 type AuthSession = { authenticated: false, user: undefined } | { authenticated: true, user: { email: string } }
+
+type Package = {
+    id: number,
+    name: string,
+    description: string,
+    price: number,
+    durationDays: number,
+    listingAllowance: number
+}
