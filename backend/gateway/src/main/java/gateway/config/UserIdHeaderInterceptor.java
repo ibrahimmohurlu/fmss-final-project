@@ -15,8 +15,11 @@ public class UserIdHeaderInterceptor implements WebFilter {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         String path = exchange.getRequest().getURI().getPath();
+        String regex="^/api/v1/listings/\\d+$";
+        System.out.println(path.matches(regex));
         boolean isGet = exchange.getRequest().getMethod().equals(HttpMethod.GET);
-        if ((path.equals("/api/v1/packages") && isGet) || (path.equals("/api/v1/listings") && isGet)) {
+        if ((path.equals("/api/v1/packages") && isGet) || (path.equals("/api/v1/listings") && isGet) || (path.matches("/api/v1/listings/\\d+$") && isGet))
+        {
             return chain.filter(exchange); // permitAll endpointler için filtreden çık
         }
         return ReactiveSecurityContextHolder
