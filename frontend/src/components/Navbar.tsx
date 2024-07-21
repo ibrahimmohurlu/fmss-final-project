@@ -1,8 +1,8 @@
-import getAuthSession from "@/utils/auth";
+import { auth } from "@/auth";
 import Link from "next/link";
 
 export default async function Navbar() {
-    const { authenticated, user } = await getAuthSession();
+    const session = await auth()
     return (
         <nav className="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -13,13 +13,13 @@ export default async function Navbar() {
 
                     <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Real Estate App</span>
                 </Link>
-                {authenticated ? (
+                {session ? (
                     <Link href={"/profile"} className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
                         <div className="flex flex-col items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-8">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                             </svg>
-                            <span>{user.email}</span>
+                            <span>{session.user?.email}</span>
                         </div>
                     </Link>
                 ) : (
