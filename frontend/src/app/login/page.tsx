@@ -1,5 +1,6 @@
 import { signIn } from "@/auth";
 import { SubmitButton } from "@/components/SubmitButton";
+import { redirect } from "next/navigation";
 
 
 export default function LoginPage() {
@@ -16,8 +17,7 @@ export default function LoginPage() {
                         </h1>
                         <form action={async (formData) => {
                             "use server"
-                            await signIn("credentials", formData)
-                            
+                            await signIn("credentials", { formData, redirectTo: "/" })
                         }} className="space-y-4 md:space-y-6">
                             <div>
                                 <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
