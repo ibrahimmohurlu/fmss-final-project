@@ -1,5 +1,5 @@
 import PricingCard from "@/components/PricingCard";
-import fetchPackages from "@/utils/fetchPackages";
+import {fetchPackages} from "@/utils/fetchPackages";
 
 export default async function PricingPage() {
     const packages = await fetchPackages();

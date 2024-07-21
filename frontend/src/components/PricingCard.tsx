@@ -1,3 +1,5 @@
+import { Package } from "@/types"
+
 type PricingCardProps = { peckage: Package }
 export default async function PricingCard({ peckage }: PricingCardProps) {
 

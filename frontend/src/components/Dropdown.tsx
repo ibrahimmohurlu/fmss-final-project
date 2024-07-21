@@ -54,14 +54,14 @@ function Dropdown() {
                             Profile
                         </Link>
                         <Link
-                            href="#"
+                            href="/profile?tab=listings"
                             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                             role="menuitem"
                         >
                             My Listings
                         </Link>
                         <Link
-                            href="#"
+                            href="/profile?tab=packages"
                             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                             role="menuitem"
                         >

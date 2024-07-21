@@ -8,7 +8,7 @@ declare module "next-auth" {
      * or the second parameter of the `session` callback, when using a database.
      */
     interface User {
-        code: string
+        password: string
 
     }
     /**
@@ -22,7 +22,7 @@ declare module "next-auth" {
      */
     interface Session {
         user?: {
-            code: string
+            password: string
         } & DefaultSession["user"]
     }
 }
@@ -34,7 +34,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             if (user) {
                 token.id = user.id;
                 token.email = user.email;
-                token.code = user.code;
+                token.password = user.password;
             }
             return token;
         },
@@ -43,7 +43,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 session.user.id = token.id as string;
                 session.user.email = token.email as string;
                 session.user.name = token.name;
-                session.user.code = token.code as string;
+                session.user.password = token.password as string;
             }
 
             return session;
@@ -70,9 +70,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                     // meaning this is also the place you could do registration
                     throw new Error("User not found.")
                 }
-                const code = new Buffer(`${email}:${password}`, "base64").toString();
+
                 // return user object with the their profile data
-                return { ...user, code }
+                return { ...user, password }
             },
         }),
     ],
